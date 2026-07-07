@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment directories
+.venv/
+venv/
+
+# PyTest cache
+.pytest_cache/
+
+# mypy cache
+.mypy_cache/
+
+# Environment files
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+
+# Data and model artifacts
+data/uploads/*
+!data/uploads/.gitkeep
+data/vector_store/*
+!data/vector_store/.gitkeep
+data/sample_pdfs/*
+!data/sample_pdfs/.gitkeep
+logs/
+*.log
+
+# Chroma and vector store caches
+chroma/
+chroma_db/
+.vector_store/
+.cache/
+
+# Model caches
+models/
+sentence_transformers_cache/
+
+# Editor/IDE files
+*.swp
+.idea/
+.vscode/
+
+# Assets not intended for git
+assets/*.mp4
+assets/*.gif
