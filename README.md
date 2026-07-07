@@ -9,7 +9,7 @@ This project demonstrates a clean and modular RAG pipeline implemented in pure P
 1. **PDF Upload** – Upload one or more PDF files via the Streamlit app or specify a PDF path on the command line.
 2. **Text Extraction** – Extract text from each page of the PDF using the `pypdf` library while preserving page‑level metadata.
 3. **Chunking** – Split the extracted text into overlapping chunks to improve retrieval granularity.  Overlapping windows help the model recall context across chunk boundaries.
-4. **Embedding** – Convert each chunk into a high dimensional vector representation.  The default implementation uses TF–IDF vectors via scikit‑learn; you can swap in more advanced models later.
+4. **Embedding** - Convert each chunk into a high dimensional vector representation. By default, the project uses the SentenceTransformer model `all-MiniLM-L6-v2` for semantic embeddings. If the model cannot be loaded, it falls back to TF-IDF via scikit-learn.
 5. **Vector Storage** – Store the embeddings and associated metadata in a simple local vector store.  By default the repository uses an in‑memory implementation to avoid heavy dependencies.
 6. **Retrieval** – Given a user question, compute its embedding and perform a similarity search over the stored vectors.  The top‑k most relevant chunks are returned.
 7. **Answer Generation** – Generate a concise answer using only the retrieved chunks.  The system returns both the answer and the corresponding source passages with page numbers and document names.  When the answer cannot be found, the user is informed that the information is not in the uploaded documents.
@@ -35,7 +35,7 @@ Retrieval Augmented Generation is a technique that combines information retrieva
 * **Graceful error handling**: Inform the user when PDFs are empty, unreadable or scanned.  If a question cannot be answered from the documents, the system will say so.
 * **Streamlit app**: A friendly web interface with adjustable chunk size, overlap and top‑k settings.  Uses `session_state` to persist processed data during the session.
 * **Command‑line interface**: A minimal CLI (`main.py`) for running the pipeline outside the browser.
-* **Tests**: Pytest tests validate text splitting, metadata preservation, retrieval ranking and pipeline behaviour on empty documents.
+* **Tests**: Pytest tests validate text splitting, metadata preservation, retrieval ranking, no-answer behavior, and pipeline behavior on empty documents.
 
 ## Project Pipeline
 
@@ -186,7 +186,7 @@ The script will print the answer along with the source snippets.
 Unit tests are provided to help ensure that the core logic behaves as expected.  To run the tests, first install the requirements and then execute:
 
 ```bash
-pytest
+python -m pytest
 ```
 
 The tests do not require external API calls or large downloads.  They use small dummy inputs and mock embeddings.
